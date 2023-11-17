@@ -1,0 +1,28 @@
+** What is Spring Container? **
+
+Spring Container manages Spring Beans and their life cycle
+1. Bean Factory: Basic Spring Container
+2. ** Application Context: Advanced Spring Container with enterprise-specific features
+	a. Easy to use in web applications
+	b. Easy internationalization
+	c. Easy integration with Spring AOP
+
+** Java Bean vs Spring Bean **
+- POJO (Plain Old Java Object)
+	No constraints
+	Any Java object is a POJO
+- Java Bean (EJB)
+	Should have a public default constructor
+	Should have Getters and Setters
+	Should implement Serializable interface
+- Spring Bean
+	Anything that is managed by Spring framework
+	Spring uses IOC Container (Bean Factory or ApplicationContext) to manage these objects
+	
+** How can I list all Spring Beans? **
+	for (String bean:context.getBeanDefinitionNames()) {
+            System.out.println(bean);
+        }
+		
+** What if multiples matching beans available? **
+	Set Bean and Primary or add Qualifier
