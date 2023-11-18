@@ -26,3 +26,63 @@ Spring Container manages Spring Beans and their life cycle
 		
 ** What if multiples matching beans available? **
 	Set Bean and Primary or add Qualifier
+	
+** How Spring can auto-wire and create our objects? **
+	@Component
+	@ComponentScan("<package-path>")
+	
+** Dependency Injection Types **
+
+- Constructor -> recommended
+- Fields -> requires @Autowired
+- Setter -> requires @Autowired
+
+** Initialization of Spring Beans **
+
+	- Default initialization is Eager
+		- Errors in the configuration are discovered immediately at startup
+	- @Lazy makes the initialization only when used
+		- Not recommended and not frequently used
+		- Lazy-resolution proxy will be injected instead of actual dependency
+		
+** Spring Bean Scopes **
+	
+	- Singleton
+		One object instance per Spring IoC container
+		@Scope(value=ConfigurableBeanFactory.SCOPE_SINGLETON) -> DEFAULT
+		
+	- Prototype
+		Possibly many object instance per Spring IoC container
+		@Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+		
+	- Scopes applicable ONLY for web-apps Spring ApplicationContext
+		- Request, Session, Application, WebSocket
+		
+	* Java Singleton (GOF) vs Spring Singleton	
+		- Spring Singleton	
+			One object instance per Spring IoC container
+		Java Singleton (GOF)
+			One object instance per JVM
+			
+** Jakarta Context & Dependency Injection (CDI)
+	
+	- Spring Framework v1 was released in 2004
+	- CDI specification introduced into Java EE 6 platform in Dec 2009
+	- Now called Jakarta Contexts and Dependency Injection (CDI)
+	- CDI is a specification (interface)
+		* Spring Framework implements CDI
+	- Important Inject API Annotations (** add jakarta as dependency in pom)
+		- Inject (~Autowired in Spring)
+		- Named (~Component in Spring)
+		- Qualifier
+		- Scope
+		- Singleton
+		
+		
+		
+		<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
