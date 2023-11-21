@@ -78,11 +78,113 @@ Spring Container manages Spring Beans and their life cycle
 		- Scope
 		- Singleton
 		
+** Annotations vs XML Configuration **
+
+						Annotations 			XML Configuration
+Ease of use				Very Easy 				Cumbersome
+Short and concise		Yes 					No
+Clean POJOs				No (use Annotations) 	Yes. No Change in POJO
+Easy to Maintain		Yes 					No
+Usage					Recent projects 		Legacy
+
+** Spring Stereotype Annotations **
+
+	@Component - Generic annotation applicable for any class
+		Base for all Spring Stereotype Annotations
+		Specializations of @Component
+			@Service
+			@Controller
+			@Repository
+	
+	What should you use?
+		Use the most specific annotation possible
+	
+** What's the most important goal of Spring Boot? **
+
+	-> Help you build PRODUCTION-READY apps QUICKLY
+		Build Quickly
+			Spring Initializr
+			Spring Boot Starter Projects
+			Spring Boot Auto Configuration
+			Spring Boot DevTools
+		Be Production Ready
+			Logging
+			Different Configuration for Different Environment
+			Monitoring (Spring Boot Actuator)
 		
+	-> pom.xml -> spring-boot-starter-web ->> dependencies
+		spring-boot-starter -> launc Spring context
+		spring-boot-starter-json -> bean <> json converter
+		spring-boot-starter-tomcat -> run application
+		spring-web and spring-webmvc -> Spring MVC
 		
-		<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+	-> Spring Boot provides variety of starter projects:
+		- Web Application & REST API - Spring Boot Starter Web (spring-webmvc,
+		spring-web, spring-boot-starter-tomcat, spring-boot-starter-json)
+		- Unit Tests - Spring Boot Starter Test
+		- Talk to db using JPA - Spring Boot Starter Data JPA
+		- Talk to db using JDBC - Spring Boot Starter JDBC
+		- Secure your web app or REST API - Spring Boot Starter Security
+
+	-> Spring Boot DevTools
+		- Increase developer productivity
+		- Similar to Nodemon
+		- Add dependency to pom.xml
+		
+** Managing Application Configuration using Profiles **
+	-> Different configuration for each environment
+	-> resources/application-<env>.properties
+	-> applications.properties ->> spring.profiles.active=<env>
+	
+** Configuration Properties **
+
+	-> Create configuration class
+	-> @ConfigurationProperties(prefix="prefix")
+	-> @Component
+	-> In controller, autowire the class
+	-> In application.properties pass the values e.g. -> prefix.name=john doe
+	-> Different values for each environment (profile)
+	
+** Deployment with Spring Boot Embedded Servers **
+
+	-> Install Java, run JAR file
+	-> Maven -> clean install
+	-> Embedded Server Examples
+		spring-boot-starter-tomcat
+		spring-boot-starter-jetty
+		spring-boot-starter-undertow
+
+** Monitor Applications using Spring Boot Actuator **
+
+	-> Provides a number of endpoints
+		- beans: Complete list of Spring beans in your app
+		- health: Application health information
+		- metrics: Application metrics
+		- mappins: Details around Request Mappings
+		
+	-> pom.xml
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+	-> application.properties -> define which endpoints are going to be exposed
+		e.g., management.endpoints.web.exposure.include=health,metrics
+		
+** Understanding Spring Boot vs Spring MVC vs Spring
+
+	-> Spring Framework
+		- Dependendy Injection
+		- @Component, @Autowired, @ComponentScan
+		- Just dependency injection is not sufficient
+	-> Spring MVC
+		- Makes building web applications easier
+		- @Controller, @RestController, @RequestMapping("/")
+	-> Spring Boot
+		- Build Production-ready apps quickly
+		- Starter Projects - make it easy to build variety of applications
+		- Auto configuration - eliminate configuration to setup Spring, Spring MVC
+		- Enable NFRs
+			Actuator: enables advanced monitoring of applications
+			Embedded Server: no need for separate application servers
+			Logging and Error Handling
+			Prfiles and Configuration Properties
