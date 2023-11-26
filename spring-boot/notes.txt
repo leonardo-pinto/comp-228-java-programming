@@ -188,3 +188,61 @@ Usage					Recent projects 		Legacy
 			Embedded Server: no need for separate application servers
 			Logging and Error Handling
 			Prfiles and Configuration Properties
+			
+			
+** JDBC vs Spring JDBC vs JPA vs Spring Data JPC
+
+	- JDBC
+		- Write a lot of SQL queries
+		- Write a lot of Java code
+	- Spring JDBC
+		- Write a lot of SQL queries
+		- Write less Java code
+	- JPA
+		- Do NOT worry about queries
+		- Just map entities to tables
+	- Spring Data JPA
+		- Takes care of everything, from queries to mapping
+		
+** Hibernate vs JPA **
+	- JPA defines the specification. It is an API
+	- Hibernate is one of the poopular implementations of JPA
+	- Using Hibernate directly would result in a lock in to Hibernate
+	
+** Todo List Web Application **
+
+	- Dependencies in Spring Initializr
+		- Spring Web
+		- DevTool
+		
+	- Project Overview
+		- TodowebApplication -> web application entry point
+		- application.properties -> project configuration (server.port=3000)
+		- pom.xml project dependencies
+		
+	- Annotations
+		- @RequestMapping(url, method)
+		- @GetMapping ->>> @RequestMapping(method='GET')
+		- @Controller
+		- @RequestBody
+		- @RestController ->>> @Controller and @RequestBody ->> returns JSON
+		
+	- Jakarta Server Pages (JSP)
+		- Java Views
+		- src/main/java/resources/META-INF/resources/WEB-INF/jsp
+		- application properties 
+			-> spring.mvc.view.prefix=/WEB-INF/jsp/ 
+			-> spring.mvc.view.suffix=.jsp/
+		- Remove @ResponseBody from method, and return the name of the jsp file
+		- ModelMap is used to bind variables to the view
+			- ModelMap in function argument
+			- Java EL (Expression Language) - ${variable}
+			- Add value to model -> model.put("name", name);
+			- model.addAttribute create key "automatically"
+		
+	- Query Parameters
+		- localhost:3000/login?name=leonardo
+		- @RequestParam String <paramname>
+		
+	- @SessionAttributes("<name>") enables storing values between requests
+		- not best practice
