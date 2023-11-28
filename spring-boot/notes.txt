@@ -246,3 +246,24 @@ Usage					Recent projects 		Legacy
 		
 	- @SessionAttributes("<name>") enables storing values between requests
 		- not best practice
+		
+		
+** REST API **
+
+	- How are our requests handled?
+		- DispatcherServlet: Front Controller Pattern
+			- Mapping servlets: dispatcherServlet urls=[/]
+			- Auto Configuration (DispatcherServletAutoConfiguration)
+	
+	- How does the returned bean object get converted to JSON?
+		- @ResponseyBody + JacksonHttpMessageConverters =>> @RestController
+		- Auto Configuration
+		
+	- Who is configuring error mapping?
+		- Auto Configuration (ErrorMvcAutoConfiguration)
+		
+	- How are all jars available (Spring, Spring MVC, Jackson, Tomcat)?
+		- Start Projects - Spring Boot Starter Web (spring-webmvc, spring-web,
+			spring-boot-starter-tomcat, spring-boot-starter-json)
+		
+		
