@@ -265,5 +265,20 @@ Usage					Recent projects 		Legacy
 	- How are all jars available (Spring, Spring MVC, Jackson, Tomcat)?
 		- Start Projects - Spring Boot Starter Web (spring-webmvc, spring-web,
 			spring-boot-starter-tomcat, spring-boot-starter-json)
+			
+** Spring Security **
+
+	- How does Spring Security works?
+		- Request -> Spring Security -> Dispatcher Servlet -> Controller
+		- Spring Security executes a series of filters
+			- Authentication
+			- Authorization
+			- CORS (Cross-Origin Request Sharing)
+			- CSRF (Cross Stie Request Forgery)
+			- Login Page, Logout Page
+			- Translating exceptions into proper Http Responses (ExceptionTranslationFilter)
+		- Basic Check Filters (CORS, CSRF) -> Authentication Filters -> Authorization Filters	
+			
+		
 		
 		
