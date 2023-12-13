@@ -279,6 +279,74 @@ Usage					Recent projects 		Legacy
 			- Translating exceptions into proper Http Responses (ExceptionTranslationFilter)
 		- Basic Check Filters (CORS, CSRF) -> Authentication Filters -> Authorization Filters	
 			
+** High Level JWT Flow **
+
+		- 1. Create a JWT
+			- Needs Encoding
+				- User credentials
+				- User data (payload)
+				- RSA key pair
+		- 2. Send JWT as part of request header
+			- Authorization Header / Bearer Token
+		- 3. JWT is verified
+			- Needs decoding
+			- RSA key pair (public key)
+			
+** Getting Start with JWT Security Configuration **
+
+	- JWT authentication using SPring Boot OAuth2 Resource Server
+		1. Create Key Pair
+			- java.security.KeyPairGenerator
+			- you can use openssl as well
+		2. Create RSA Key object using Key Pair
+			- com.nimbusds.jose.jwk.RSAKey
+		3. Create JWKSource (JSON Web Key source)
+			- create JWKSet(a new JSON Web Key set) with the RSA key
+			- create JWKSource using the JWKSet
+		4. Use RSA Public key for decoding
 		
+** Creating Docker image for Spring Boot Project **
+
+	Dockerfile -> create docker image <in28min/hello-world-docker>
+		FROM openjdk:18.0-slim ->> base image
+		COPY target/*.jar app.jar ->> copying build file (.jar) to app.jar inside image
+		EXPOSE 5000
+		ENTRYPOINT ["java", "-jar", "/app.jar"] ->> java -jar /app.jar
+	
+	In terminal:
+		docker build -t in28min/hello-world-docker:v1 . ->> t for tag (v1) . for context
 		
+	Run the container:
+		docker run -d -p 5000:5000 in28min/hello-world-docker
+
+** Creating Docker image using Multi Stage **
+	
+	-> entire build process should happen inside image
+	
+	FROM maven:3.8.6-openjdk-18-slim AS build
+	WORKDIR /home/app
+	COPY . /home/app
+	RUN mvc -f /home/app/pom.xml clean package
+	
+	FROM openjdk:18.0-slim
+	VOLUME /tmp
+	COPY --from=build /home/app/target/*.jar app.jar
+	EXPOSE 5000
+	ENTRYPOINT ["sh", "-c", "java", "-jar", "/app.jar"]
+	
+** Improve Layer Caching
+	-> Copy Spring Boot application and pom.xml first, since these files
+	are rarely changed. This is create a cache layer
+	
+	...
+		COPY ./pom.xml /home/app/pom.xml
+		COPY ./src/main/java/com/example/demodocker/DemoDockerApplication.java /
+		/home/app/src/main/java/com/example/demodocker/DemoDockerApplication.java
+		
+		RUN mvn -f /home/app/pom.xml clean package
+		
+		COPY . /home/app
+		RUN mvn -f /home/app/pom.xml clean package
+		
+
 		
